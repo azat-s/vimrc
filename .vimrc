@@ -8,6 +8,7 @@ call plug#begin('~/.vim/plugged')
         Plug 'vim-airline/vim-airline-themes'
         Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         Plug 'junegunn/fzf.vim'
+        Plug 'tpope/vim-fugitive'
 call plug#end()
 
 " AIRLINE
@@ -96,8 +97,16 @@ set smartcase
 
 " INDENTATION
 
+autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
+
+autocmd BufNewFile,BufRead *.js set shiftwidth=2
+autocmd BufNewFile,BufRead *.js set tabstop=2
+autocmd BufNewFile,BufRead *.js set softtabstop=2
+
 " Needs lines inherit the indentation of previous lines
 set autoindent
+set smartindent
+filetype indent on
 
 " Convert tabs to spaces
 set expandtab
@@ -298,3 +307,6 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
 " FZF
 nnoremap <silent> <leader>p :GFiles<CR>
+
+
+au filetype javascript iabbrev clg console.log(
