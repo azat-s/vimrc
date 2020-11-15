@@ -9,7 +9,38 @@ call plug#begin('~/.vim/plugged')
         Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
         Plug 'junegunn/fzf.vim'
         Plug 'tpope/vim-fugitive'
+        Plug 'preservim/nerdtree' |
+            \ Plug 'Xuyuanp/nerdtree-git-plugin' 
+
 call plug#end()
+
+
+" OPEN NerdTree when Vim starts"
+autocmd vimenter * NERDTree
+
+" OPEN with vim"
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+
+map <C-e> :NERDTreeToggle<CR>
+
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+
+" GIT
+let g:NERDTreeGitStatusUseNerdFonts = 1
+let g:NERDTreeGitStatusIndicatorMapCustom = {
+                \ 'Modified'  :'◉',
+                \ 'Staged'    :'●',
+                \ 'Untracked' :'○',
+                \ 'Renamed'   :'R',
+                \ 'Unmerged'  :'◐',
+                \ 'Deleted'   :'╳',
+                \ 'Dirty'     :'␡',
+                \ 'Ignored'   :'☠',
+                \ 'Clean'     :'✓',
+                \ 'Unknown'   :'?',
+                \ }
 
 " AIRLINE
 let g:airline_theme='deus'
